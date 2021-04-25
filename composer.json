@@ -1,0 +1,22 @@
+{
+    "name": "olekjs/allegro-sdk-php",
+    "description": "Allegro SDK for PHP",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^7.3"
+    },
+    "authors": [
+        {
+            "name": "Olek Kaim",
+            "email": "kontakt@olekkaim.pl"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "Olekjs\\Allegro\\": "src/"
+        }
+    }
+}

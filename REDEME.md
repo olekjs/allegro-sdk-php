@@ -1,0 +1,1 @@
+# Allegro SDK for PHP

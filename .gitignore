@@ -1,0 +1,4 @@
+vendor/
+composer.lock
+*.sublime-*
+.phpunit.result.cache
