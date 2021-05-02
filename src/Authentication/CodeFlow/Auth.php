@@ -5,6 +5,7 @@ namespace Olekjs\Allegro\Authentication\CodeFlow;
 use GuzzleHttp\Exception\RequestException;
 use Olekjs\Allegro\Client;
 use Olekjs\Allegro\Contracts\Auth as AuthContract;
+use Olekjs\Allegro\Responses\Response;
 
 class Auth implements AuthContract
 {
@@ -84,9 +85,9 @@ class Auth implements AuthContract
      */
     public function getAuthenticationLink(
         array $scopes = [],
-            ? string $state = null,
-            ? string $prompt = null
-    ) : string{
+        ? string $state = null,
+        ? string $prompt = null
+    ) : string {
         $data = [
             'response_type' => 'code',
             'client_id'     => $this->clientId,
@@ -119,10 +120,9 @@ class Auth implements AuthContract
      * @param  string  $code
      * @param  string|null  $codeVerifier
      *
-     * @return array
-     * @throws  RequestException
+     * @return Olekjs\Allegro\Responses\Response\Response
      */
-    public function authorize(string $code,  ? string $codeVerifier = null) : array
+    public function authorize(string $code, ?string $codeVerifier = null) : Response
     {
         $data = [
             'query' => [
@@ -143,14 +143,16 @@ class Auth implements AuthContract
         try {
             $response = $this->getClient()->post('token', $data);
 
-            return $response->getBody()->getContents();
+            return Response::create(
+                json_decode($response->getBody()->getContents(), true)
+            );
         } catch (RequestException $exception) {
             $response = $exception->getResponse();
 
-            return [
+            return Response::create([
                 'message' => $response->getReasonPhrase(),
                 'status'  => $response->getStatusCode(),
-            ];
+            ]);
         }
     }
 
@@ -159,10 +161,9 @@ class Auth implements AuthContract
      *
      * @param  string  $refreshToken
      *
-     * @return array
-     * @throws  RequestException
+     * @return Olekjs\Allegro\Responses\Response\Response
      */
-    public function refreshToken(string $refreshToken) : array
+    public function refreshToken(string $refreshToken) : Response
     {
         $data = [
             'headers' => [
@@ -178,14 +179,16 @@ class Auth implements AuthContract
         try {
             $response = $this->getClient()->post('token', $data);
 
-            return $response->getBody()->getContents();
+            return Response::create(
+                json_decode($response->getBody()->getContents(), true)
+            );
         } catch (RequestException $exception) {
             $response = $exception->getResponse();
 
-            return [
+            return Response::create([
                 'message' => $response->getReasonPhrase(),
                 'status'  => $response->getStatusCode(),
-            ];
+            ]);
         }
     }
 

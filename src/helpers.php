@@ -44,7 +44,7 @@ if (!function_exists('array_get')) {
     function array_get($array, $key, $default = null)
     {
         if (!array_accessible($array)) {
-            return value($default);
+            return $default;
         }
 
         if (is_null($key)) {
@@ -56,14 +56,14 @@ if (!function_exists('array_get')) {
         }
 
         if (strpos($key, '.') === false) {
-            return $array[$key] ?? value($default);
+            return $array[$key] ?? $default;
         }
 
         foreach (explode('.', $key) as $segment) {
             if (array_accessible($array) && array_string_key_exists($array, $segment)) {
                 $array = $array[$segment];
             } else {
-                return value($default);
+                return $default;
             }
         }
 
@@ -79,5 +79,15 @@ if (!function_exists('base64_url_encode')) {
         $base64url = strtr($base64, '+/', '-_');
 
         return ($base64url);
+    }
+}
+
+if (!function_exists('dd')) {
+    function dd($variable)
+    {
+        foreach (func_get_args() as $variable) {
+            var_dump($variable);
+        }
+        die;
     }
 }

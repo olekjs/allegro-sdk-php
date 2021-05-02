@@ -2,6 +2,8 @@
 
 namespace Olekjs\Allegro\Contracts;
 
+use Olekjs\Allegro\Responses\Response;
+
 interface Auth
 {
     /**
@@ -16,10 +18,9 @@ interface Auth
      *
      * @param  string  $refreshToken
      *
-     * @return array
-     * @throws  RequestException
+     * @return Olekjs\Allegro\Responses\Response\Response
      */
-    public function refreshToken(string $refreshToken): array;
+    public function refreshToken(string $refreshToken): Response;
 
     /**
      * Authorize user.
@@ -27,10 +28,9 @@ interface Auth
      * @param  string  $code
      * @param  string|null  $codeVerifier
      *
-     * @return array
-     * @throws  RequestException
+     * @return Olekjs\Allegro\Responses\Response\Response
      */
-    public function authorize(string $code, ?string $codeVerifier = null) : array;
+    public function authorize(string $code, ?string $codeVerifier = null) : Response;
 
     /**
      * Get link to authentication page.
