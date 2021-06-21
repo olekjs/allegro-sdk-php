@@ -82,6 +82,15 @@ if (!function_exists('base64_url_encode')) {
     }
 }
 
+if (!function_exists('str_between')) {
+    function str_between(string $subject, string $from, string $to)
+    {
+        preg_match_all("/{$from}(.*?){$to}/", $subject, $match);
+
+        return $match;
+    }
+}
+
 if (!function_exists('dd')) {
     function dd($variable)
     {

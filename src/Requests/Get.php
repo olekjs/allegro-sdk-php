@@ -27,20 +27,20 @@ class Get
      *
      * @var  array
      */
-    private $arguments;
+    private $queryParams;
 
     /**
      * Get request constructor.
      *
      * @param  Olekjs\Allegro\Client  $client
      * @param  string  $endpoint
-     * @param  array  $arguments
+     * @param  array|null  $queryParams
      */
-    public function __construct(Client $client, string $endpoint, array $arguments)
+    public function __construct(Client $client, string $endpoint,  ?array $queryParams)
     {
-        $this->client    = $client;
-        $this->endpoint  = $endpoint;
-        $this->arguments = $arguments;
+        $this->client      = $client;
+        $this->endpoint    = $endpoint;
+        $this->queryParams = $queryParams;
     }
 
     /**
@@ -48,11 +48,14 @@ class Get
      *
      * @return Olekjs\Allegro\Responses\Response
      */
-    public function doRequest(): Response
+    public function doRequest() : Response
     {
         try {
             $response = $this->client->get(
                 $this->endpoint,
+                [
+                    'query' => $this->queryParams,
+                ]
             );
 
             return Response::create(
@@ -61,7 +64,7 @@ class Get
         } catch (RequestException $exception) {
             $response = $exception->getResponse();
 
-            Response::create([
+            return Response::create([
                 'message' => $response->getReasonPhrase(),
                 'status'  => $response->getStatusCode(),
             ]);
