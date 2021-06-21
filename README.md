@@ -1,4 +1,4 @@
-# # Allegro SDK for PHP
+# Allegro SDK for PHP
 ### Work in progress...
 
 **Allegro SDK for PHP** is a package with an elegant syntax for connecting to the Allegro API
